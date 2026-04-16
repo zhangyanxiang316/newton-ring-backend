@@ -60,7 +60,7 @@ def chat():
 
     try:
         resp = requests.post(COZE_API_URL, headers=headers, json=payload, timeout=30)
-        resp_data = resp.json()
+        resp_data = resp.json()print("扣子返回的原始数据:", resp_data)
         if resp_data.get('code') == 0:
             messages = resp_data.get('messages', [])
             bot_reply = next((m['content'] for m in messages if m['role'] == 'assistant'), "嗯，这个问题有点意思...")
