@@ -12,6 +12,12 @@ CORS(app)
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# ==================== 扣子API代理配置 ====================
+COZE_BOT_ID = "7629205057501823027"
+COZE_API_TOKEN = "pat_CNcyRV6qnMmJ6MfxBMUovl5e8r7lmG7C3EHjYnwWb9bonEetkc8mWcHkr5Cf0K0R"
+COZE_API_URL = "https://api.coze.cn/open_api/v2/chat"
+
+# ==================== 图片上传与R计算接口 ====================
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'image' not in request.files:
@@ -33,13 +39,7 @@ def upload():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
-# ==================== 扣子API代理接口 ====================
-COZE_BOT_ID = "7629205057501823027"      # 你的 Bot ID
-COZE_API_TOKEN = "pat_CNcyRV6qnMmJ6MfxBMUovl5e8r7lmG7C3EHjYnwWb9bonEetkc8mWcHkr5Cf0K0R"  # 你的 Access Token
-COZE_API_URL = "https://api.coze.cn/open_api/v2/chat"
-
+# ==================== 扣子API代理接口（苏格拉底式对话） ====================
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
@@ -69,4 +69,7 @@ def chat():
             return jsonify({'error': resp_data.get('msg', '扣子API出错')}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
+# ==================== 启动入口 ====================
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
